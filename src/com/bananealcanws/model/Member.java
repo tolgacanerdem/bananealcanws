@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="members")
+@XmlRootElement(name = "member")
 public class Member implements Serializable {
 
 	private static final long serialVersionUID = -6218331417263723568L;

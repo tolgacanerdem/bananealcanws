@@ -2,6 +2,7 @@ package com.bananealcanws.model;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "gift")
@@ -25,6 +26,7 @@ public class Gift implements Serializable {
 	 * @param id
 	 *            the id to set
 	 */
+	@XmlElement
 	public synchronized void setId(String id) {
 		this.id = id;
 	}
@@ -40,6 +42,7 @@ public class Gift implements Serializable {
 	 * @param wishListId
 	 *            the wishListId to set
 	 */
+	@XmlElement
 	public synchronized void setWishListId(String wishListId) {
 		this.wishListId = wishListId;
 	}
@@ -55,6 +58,7 @@ public class Gift implements Serializable {
 	 * @param name
 	 *            the name to set
 	 */
+	@XmlElement
 	public synchronized void setName(String name) {
 		this.name = name;
 	}
@@ -70,6 +74,7 @@ public class Gift implements Serializable {
 	 * @param detail
 	 *            the detail to set
 	 */
+	@XmlElement
 	public synchronized void setDetail(String detail) {
 		this.detail = detail;
 	}
@@ -85,6 +90,7 @@ public class Gift implements Serializable {
 	 * @param price
 	 *            the price to set
 	 */
+	@XmlElement
 	public synchronized void setPrice(String price) {
 		this.price = price;
 	}
@@ -100,6 +106,7 @@ public class Gift implements Serializable {
 	 * @param notes
 	 *            the notes to set
 	 */
+	@XmlElement
 	public synchronized void setNotes(String notes) {
 		this.notes = notes;
 	}

@@ -15,7 +15,7 @@ public class MemberService {
 	MemberDao memberDao = new MemberDao();
 
 	@GET
-	@Path("/members")
+	@Path("/Members")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Member> getAllMembers() {
 		return memberDao.getAllMembers();
