@@ -15,7 +15,7 @@ public class GiftDao {
 	public List<Gift> searchGiftsByName(String name) throws SQLException, ClassNotFoundException {
 		List<Gift> gifts = new ArrayList<>();
 		ResultSet rs = null;
-		Class.forName("com.mysql.jdbc.Connection");
+		Class.forName("com.mysql.jdbc.Driver");
 		String query = "select * from gift where name like ?";
 		try (Connection con = DriverManager.getConnection("jdbc:mysql://185.141.33.102:3306/bananealcanDB", "bnauser",
 				"bnauser"); PreparedStatement st = con.prepareStatement(query);) {
@@ -42,10 +42,9 @@ public class GiftDao {
 
 	public List<Gift> getAllGifts() throws ClassNotFoundException {
 		List<Gift> gifts = new ArrayList<>();
-
-		Class.forName("com.mysql.jdbc.Connection");
+		Class.forName("com.mysql.jdbc.Driver");
 		String query = "select * from gift";
-		try (Connection con = DriverManager.getConnection("jdbc:mysql://185.141.33.102:3306/bananealcanDB", "bnauser",
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://185.141.33.102:3306/bananealcandb", "bnauser",
 				"bnauser"); PreparedStatement st = con.prepareStatement(query); ResultSet rs = st.executeQuery();) {
 
 			while (rs.next()) {
@@ -64,7 +63,7 @@ public class GiftDao {
 
 	public boolean addGift(Gift gift) throws ClassNotFoundException {
 
-		Class.forName("com.mysql.jdbc.Connection");
+		Class.forName("com.mysql.jdbc.Driver");
 		String query = "insert into `gift` (`name`,`description`,`wishlist_id`) values (?,?,?)";
 		try (Connection con = DriverManager.getConnection("jdbc:mysql://185.141.33.102:3306/bananealcanDB", "bnauser",
 				"bnauser"); PreparedStatement st = con.prepareStatement(query);) {
@@ -80,7 +79,7 @@ public class GiftDao {
 	}
 
 	public boolean removeGift(String id) throws ClassNotFoundException {
-		Class.forName("com.mysql.jdbc.Connection");
+		Class.forName("com.mysql.jdbc.Driver");
 		String query = "delete from gift where id = ? ";
 		try (Connection con = DriverManager.getConnection("jdbc:mysql://185.141.33.102:3306/bananealcanDB", "bnauser",
 				"bnauser"); PreparedStatement st = con.prepareStatement(query);) {
@@ -95,7 +94,7 @@ public class GiftDao {
 	}
 
 	public boolean updateGift(Gift gift) throws ClassNotFoundException {
-		Class.forName("com.mysql.jdbc.Connection");
+		Class.forName("com.mysql.jdbc.Driver");
 		String query = "update gift set name = ?, description = ?, wishlist_id = ? where id = ? ";
 		try (Connection con = DriverManager.getConnection("jdbc:mysql://185.141.33.102:3306/bananealcanDB", "bnauser",
 				"bnauser"); PreparedStatement st = con.prepareStatement(query);) {
