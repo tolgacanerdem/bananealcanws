@@ -17,8 +17,9 @@ public class GiftService {
 	@Path("/Gifts")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Gift> getAllGifts() throws ClassNotFoundException {
-		GiftDao dao = new GiftDao();
-		return dao.getAllGifts();
+		GiftDao giftDao = new GiftDao();
+		List<Gift> gifts = giftDao.getAll();
+		return gifts;
 	}
 
 }

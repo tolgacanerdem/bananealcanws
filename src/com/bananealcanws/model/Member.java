@@ -17,9 +17,7 @@ public class Member implements Serializable {
 	private String username;
 	private String mail;
 	private String password;
-	private Map<String, Date> importantDates;
 	private String profileImage;
-	private boolean isActive;
 
 	public Member() {
 
@@ -131,22 +129,6 @@ public class Member implements Serializable {
 	}
 
 	/**
-	 * @return the importantDates
-	 */
-	public synchronized Map<String, Date> getImportantDates() {
-		return importantDates;
-	}
-
-	/**
-	 * @param importantDates
-	 *            the importantDates to set
-	 */
-	@XmlElement
-	public synchronized void setImportantDates(Map<String, Date> importantDates) {
-		this.importantDates = importantDates;
-	}
-
-	/**
 	 * @return the profileImage
 	 */
 	public synchronized String getProfileImage() {
@@ -162,19 +144,4 @@ public class Member implements Serializable {
 		this.profileImage = profileImage;
 	}
 
-	/**
-	 * @return the isActive
-	 */
-	public synchronized boolean isActive() {
-		return isActive;
-	}
-
-	/**
-	 * @param isActive
-	 *            the isActive to set
-	 */
-	@XmlElement
-	public synchronized void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
 }

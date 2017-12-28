@@ -10,9 +10,73 @@ import java.util.List;
 
 import com.bananealcanws.model.Gift;
 
-public class GiftDao {
+public class GiftDao implements IDao<Gift> {
 
-	public List<Gift> searchGiftsByName(String name) throws SQLException, ClassNotFoundException {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		// Gift gift = new Gift();
+		// gift.setName("test1");
+		// gift.setDetail("test1");
+		// gift.setWishListId("2");
+		// gift.setId("5");
+		// new GiftDao().updateGift(gift);
+
+		// new GiftDao().removeGift("4");
+
+		// Gift gift = new Gift();
+		// gift.setName("test");
+		// gift.setDetail("test");
+		// gift.setWishListId("1");
+		// new GiftDao().addGift(gift);
+
+		List<Gift> gifts = new GiftDao().getAll();
+
+		for (Gift gift : gifts) {
+			System.out.println(gift.getId());
+			System.out.println(gift.getName());
+			System.out.println(gift.getDetail());
+			System.out.println(gift.getWishListId());
+		}
+
+		// List<Gift> gifts = new GiftDao().searchGiftsByName("a");
+		//
+		// for (Gift gift : gifts) {
+		// System.out.println(gift.getId());
+		// System.out.println(gift.getName());
+		// System.out.println(gift.getDetail());
+		// System.out.println(gift.getWishListId());
+		// }
+	}
+
+	@Override
+	public Gift getById(String id) throws ClassNotFoundException, SQLException {
+		Gift g = null;
+		ResultSet rs = null;
+		Class.forName("com.mysql.jdbc.Driver");
+		String query = "select * from gift where id = ?";
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://185.141.33.102:3306/bananealcanDB", "bnauser",
+				"bnauser"); PreparedStatement st = con.prepareStatement(query);) {
+
+			st.setString(1, id);
+			rs = st.executeQuery();
+			while (rs.next()) {
+				g = new Gift();
+				g.setId(rs.getString("id"));
+				g.setName(rs.getString("name"));
+				g.setDetail(rs.getString("description"));
+				g.setWishListId(rs.getString("wishlist_id"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				rs.close();
+			}
+		}
+		return g;
+	}
+
+	@Override
+	public List<Gift> searchByName(String name) throws ClassNotFoundException, SQLException {
 		List<Gift> gifts = new ArrayList<>();
 		ResultSet rs = null;
 		Class.forName("com.mysql.jdbc.Driver");
@@ -40,7 +104,8 @@ public class GiftDao {
 		return gifts;
 	}
 
-	public List<Gift> getAllGifts() throws ClassNotFoundException {
+	@Override
+	public List<Gift> getAll() throws ClassNotFoundException {
 		List<Gift> gifts = new ArrayList<>();
 		Class.forName("com.mysql.jdbc.Driver");
 		String query = "select * from gift";
@@ -61,8 +126,8 @@ public class GiftDao {
 		return gifts;
 	}
 
-	public boolean addGift(Gift gift) throws ClassNotFoundException {
-
+	@Override
+	public boolean create(Gift gift) throws ClassNotFoundException {
 		Class.forName("com.mysql.jdbc.Driver");
 		String query = "insert into `gift` (`name`,`description`,`wishlist_id`) values (?,?,?)";
 		try (Connection con = DriverManager.getConnection("jdbc:mysql://185.141.33.102:3306/bananealcanDB", "bnauser",
@@ -78,7 +143,8 @@ public class GiftDao {
 		}
 	}
 
-	public boolean removeGift(String id) throws ClassNotFoundException {
+	@Override
+	public boolean remove(String id) throws ClassNotFoundException {
 		Class.forName("com.mysql.jdbc.Driver");
 		String query = "delete from gift where id = ? ";
 		try (Connection con = DriverManager.getConnection("jdbc:mysql://185.141.33.102:3306/bananealcanDB", "bnauser",
@@ -90,10 +156,10 @@ public class GiftDao {
 			e.printStackTrace();
 			return false;
 		}
-
 	}
 
-	public boolean updateGift(Gift gift) throws ClassNotFoundException {
+	@Override
+	public boolean update(Gift gift) throws ClassNotFoundException {
 		Class.forName("com.mysql.jdbc.Driver");
 		String query = "update gift set name = ?, description = ?, wishlist_id = ? where id = ? ";
 		try (Connection con = DriverManager.getConnection("jdbc:mysql://185.141.33.102:3306/bananealcanDB", "bnauser",
@@ -108,41 +174,5 @@ public class GiftDao {
 			e.printStackTrace();
 			return false;
 		}
-
-	}
-
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-		// Gift gift = new Gift();
-		// gift.setName("test1");
-		// gift.setDetail("test1");
-		// gift.setWishListId("2");
-		// gift.setId("5");
-		// new GiftDao().updateGift(gift);
-
-		// new GiftDao().removeGift("4");
-
-		// Gift gift = new Gift();
-		// gift.setName("test");
-		// gift.setDetail("test");
-		// gift.setWishListId("1");
-		// new GiftDao().addGift(gift);
-
-		List<Gift> gifts = new GiftDao().getAllGifts();
-
-		for (Gift gift : gifts) {
-			System.out.println(gift.getId());
-			System.out.println(gift.getName());
-			System.out.println(gift.getDetail());
-			System.out.println(gift.getWishListId());
-		}
-
-		// List<Gift> gifts = new GiftDao().searchGiftsByName("a");
-		//
-		// for (Gift gift : gifts) {
-		// System.out.println(gift.getId());
-		// System.out.println(gift.getName());
-		// System.out.println(gift.getDetail());
-		// System.out.println(gift.getWishListId());
-		// }
 	}
 }
