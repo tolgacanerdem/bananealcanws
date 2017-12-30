@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "gift")
+@XmlRootElement(name = "gifts")
 public class Gift implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String id;
