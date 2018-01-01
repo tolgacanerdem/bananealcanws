@@ -14,47 +14,45 @@ import javax.ws.rs.core.UriInfo;
 
 import org.codehaus.jettison.json.JSONObject;
 
-import com.bananealcanws.dao.IDao;
-import com.bananealcanws.dao.MemberDao;
-import com.bananealcanws.helper.DaoHelper;
-import com.bananealcanws.model.Member;
+import com.bananealcanws.dao.WishListDao;
+import com.bananealcanws.model.WishList;
 
-@Path("/MemberService")
-public class MemberService implements IService<Member> {
+public class WishListService implements IService<WishList> {
 
-	private static final IDao<Member> memberDao = new MemberDao();
+	private static final WishListDao wlDao = new WishListDao();
 
 	@Override
 	@GET
 	@Path("/GetById")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Member getById(@Context UriInfo params) throws Exception {
-		return DaoHelper.GetMemberById(params, memberDao);
+	public WishList getById(@Context UriInfo params) throws Exception {
+		String id = params.getQueryParameters().getFirst("id");
+		return wlDao.getById(id);
 	}
 
+	@Override
 	@GET
 	@Path("/SearchByName")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Override
-	public List<Member> searchByName(UriInfo params) throws Exception {
+	public List<WishList> searchByName(@Context UriInfo params) throws Exception {
 		String name = params.getQueryParameters().getFirst("name");
-		return memberDao.searchByName(name);
+		return wlDao.searchByName(name);
 	}
 
 	@Override
 	@GET
 	@Path("/GetAll")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Member> getAll() throws Exception {
-		return memberDao.getAll();
+	public List<WishList> getAll() throws Exception {
+		return wlDao.getAll();
 	}
 
 	@Override
 	@POST
 	@Path("/Create")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response create(Member member) throws Exception {
-		String result = String.valueOf(memberDao.create(member));
+	public Response create(WishList t) throws Exception {
+		String result = String.valueOf(wlDao.create(t));
 		return Response.status(201).entity(result).build();
 	}
 
@@ -64,7 +62,7 @@ public class MemberService implements IService<Member> {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response remove(String idJson) throws Exception {
 		JSONObject obj = new JSONObject(idJson);
-		String result = String.valueOf(memberDao.remove(obj.getString("id")));
+		String result = String.valueOf(wlDao.remove(obj.getString("id")));
 		return Response.status(200).entity(result).build();
 	}
 
@@ -72,8 +70,8 @@ public class MemberService implements IService<Member> {
 	@POST
 	@Path("/Update")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(Member member) throws Exception {
-		String result = String.valueOf(memberDao.update(member));
+	public Response update(WishList t) throws Exception {
+		String result = String.valueOf(wlDao.update(t));
 		return Response.status(200).entity(result).build();
 	}
 

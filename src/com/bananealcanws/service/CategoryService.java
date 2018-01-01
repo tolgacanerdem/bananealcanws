@@ -14,47 +14,41 @@ import javax.ws.rs.core.UriInfo;
 
 import org.codehaus.jettison.json.JSONObject;
 
-import com.bananealcanws.dao.IDao;
-import com.bananealcanws.dao.MemberDao;
-import com.bananealcanws.helper.DaoHelper;
-import com.bananealcanws.model.Member;
+import com.bananealcanws.dao.CategoryDao;
+import com.bananealcanws.model.Category;
 
-@Path("/MemberService")
-public class MemberService implements IService<Member> {
+public class CategoryService implements IService<Category> {
 
-	private static final IDao<Member> memberDao = new MemberDao();
+	private static final CategoryDao catDao = new CategoryDao();
 
 	@Override
 	@GET
 	@Path("/GetById")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Member getById(@Context UriInfo params) throws Exception {
-		return DaoHelper.GetMemberById(params, memberDao);
+	public Category getById(@Context UriInfo params) throws Exception {
+		String id = params.getQueryParameters().getFirst("id");
+		return catDao.getById(id);
 	}
 
-	@GET
-	@Path("/SearchByName")
-	@Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public List<Member> searchByName(UriInfo params) throws Exception {
-		String name = params.getQueryParameters().getFirst("name");
-		return memberDao.searchByName(name);
+	public List<Category> searchByName(@Context UriInfo params) throws Exception {
+		return null;
 	}
 
 	@Override
 	@GET
 	@Path("/GetAll")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Member> getAll() throws Exception {
-		return memberDao.getAll();
+	public List<Category> getAll() throws Exception {
+		return catDao.getAll();
 	}
 
 	@Override
 	@POST
 	@Path("/Create")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response create(Member member) throws Exception {
-		String result = String.valueOf(memberDao.create(member));
+	public Response create(Category t) throws Exception {
+		String result = String.valueOf(catDao.create(t));
 		return Response.status(201).entity(result).build();
 	}
 
@@ -64,7 +58,7 @@ public class MemberService implements IService<Member> {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response remove(String idJson) throws Exception {
 		JSONObject obj = new JSONObject(idJson);
-		String result = String.valueOf(memberDao.remove(obj.getString("id")));
+		String result = String.valueOf(catDao.remove(obj.getString("id")));
 		return Response.status(200).entity(result).build();
 	}
 
@@ -72,8 +66,8 @@ public class MemberService implements IService<Member> {
 	@POST
 	@Path("/Update")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(Member member) throws Exception {
-		String result = String.valueOf(memberDao.update(member));
+	public Response update(Category t) throws Exception {
+		String result = String.valueOf(catDao.update(t));
 		return Response.status(200).entity(result).build();
 	}
 
