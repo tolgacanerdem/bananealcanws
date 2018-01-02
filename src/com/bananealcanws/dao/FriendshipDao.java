@@ -28,7 +28,7 @@ public class FriendshipDao implements IDao<Friendship> {
 				friendList = new Friendship();
 				friendList.setId(rs.getString("id"));
 				friendList.setId(rs.getString("member_id"));
-				friendList.setFriend_id(rs.getString("friend_id"));
+				friendList.setFriendId(rs.getString("friend_id"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -42,13 +42,11 @@ public class FriendshipDao implements IDao<Friendship> {
 
 	@Override
 	public List<Friendship> searchByName(String name) throws Exception {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Friendship> getAll() throws Exception {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -58,8 +56,8 @@ public class FriendshipDao implements IDao<Friendship> {
 		String query = "insert into `friendship` (`member_id`,`friend_id`) values (?,?)";
 		try (Connection con = DriverManager.getConnection("jdbc:mysql://185.141.33.102:3306/bananealcanDB", "bnauser",
 				"bnauser"); PreparedStatement st = con.prepareStatement(query);) {
-			st.setString(1, t.getMember_id());
-			st.setString(2, t.getFriend_id());
+			st.setString(1, t.getMemberId());
+			st.setString(2, t.getFriendId());
 			st.executeUpdate();
 			return true;
 		} catch (Exception e) {
@@ -89,8 +87,8 @@ public class FriendshipDao implements IDao<Friendship> {
 		String query = "update friendship set member_id = ?, friend_id = ? where id = ? ";
 		try (Connection con = DriverManager.getConnection("jdbc:mysql://185.141.33.102:3306/bananealcanDB", "bnauser",
 				"bnauser"); PreparedStatement st = con.prepareStatement(query);) {
-			st.setString(1, t.getMember_id());
-			st.setString(2, t.getFriend_id());
+			st.setString(1, t.getMemberId());
+			st.setString(2, t.getFriendId());
 			st.setString(3, t.getId());
 			st.executeUpdate();
 			return true;
@@ -99,7 +97,7 @@ public class FriendshipDao implements IDao<Friendship> {
 			return false;
 		}
 	}
-	
+
 	public boolean removeFriend(String memberId, String friendId) throws ClassNotFoundException {
 		Class.forName("com.mysql.jdbc.Driver");
 		String query = "delete from friendship where member_id = ? and friend_id = ?";

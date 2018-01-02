@@ -5,28 +5,30 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.bananealcanws.model.Category;
+import com.bananealcanws.model.ImportantDate;
 
-public class CategoryDao implements IDao<Category> {
+public class ImportantDateDao implements IDao<ImportantDate> {
 
 	@Override
-	public Category getById(String id) throws Exception {
-		Category category = null;
+	public ImportantDate getById(String id) throws Exception {
+		ImportantDate imdate = null;
 		ResultSet rs = null;
 		Class.forName("com.mysql.jdbc.Driver");
-		String query = "select * from category where id = ?";
+		String query = "select * from important_date where id = ?";
 		try (Connection con = DriverManager.getConnection("jdbc:mysql://185.141.33.102:3306/bananealcanDB", "bnauser",
 				"bnauser"); PreparedStatement st = con.prepareStatement(query);) {
 
 			st.setString(1, id);
 			rs = st.executeQuery();
 			while (rs.next()) {
-				category = new Category();
-				category.setId(rs.getString("id"));
-				category.setName(rs.getString("name"));
+				imdate = new ImportantDate();
+				imdate.setId(rs.getString("id"));
+				imdate.setMemberId(rs.getString("member_id"));
+				imdate.setDateName(rs.getString("date_name"));
+				imdate.setDateDescription(rs.getString("date_description"));
+				imdate.setImportantDate(rs.getDate("important_date"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -35,41 +37,29 @@ public class CategoryDao implements IDao<Category> {
 				rs.close();
 			}
 		}
-		return category;
+		return imdate;
 	}
 
 	@Override
-	public List<Category> searchByName(String name) throws Exception {
+	public List<ImportantDate> searchByName(String name) throws Exception {
 		return null;
 	}
 
 	@Override
-	public List<Category> getAll() throws Exception {
-		List<Category> categories = new ArrayList<>();
-		Class.forName("com.mysql.jdbc.Driver");
-		String query = "select * from category";
-		try (Connection con = DriverManager.getConnection("jdbc:mysql://185.141.33.102:3306/bananealcandb", "bnauser",
-				"bnauser"); PreparedStatement st = con.prepareStatement(query); ResultSet rs = st.executeQuery();) {
-
-			while (rs.next()) {
-				Category category = new Category();
-				category.setId(rs.getString("id"));
-				category.setName(rs.getString("name"));
-				categories.add(category);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return categories;
+	public List<ImportantDate> getAll() throws Exception {
+		return null;
 	}
 
 	@Override
-	public boolean create(Category category) throws Exception {
+	public boolean create(ImportantDate imdate) throws Exception {
 		Class.forName("com.mysql.jdbc.Driver");
-		String query = "insert into `category` (`name`) values (?)";
+		String query = "insert into `important_date` (`member_id`,`date_name`,`date_description`,`important_date`) values (?,?,?,?)";
 		try (Connection con = DriverManager.getConnection("jdbc:mysql://185.141.33.102:3306/bananealcanDB", "bnauser",
 				"bnauser"); PreparedStatement st = con.prepareStatement(query);) {
-			st.setString(1, category.getName());
+			st.setString(1, imdate.getMemberId());
+			st.setString(2, imdate.getDateName());
+			st.setString(3, imdate.getDateDescription());
+			st.setDate(4, imdate.getImportantDate());
 			st.executeUpdate();
 			return true;
 		} catch (Exception e) {
@@ -81,7 +71,7 @@ public class CategoryDao implements IDao<Category> {
 	@Override
 	public boolean remove(String id) throws Exception {
 		Class.forName("com.mysql.jdbc.Driver");
-		String query = "delete from category where id = ? ";
+		String query = "delete from important_date where id = ? ";
 		try (Connection con = DriverManager.getConnection("jdbc:mysql://185.141.33.102:3306/bananealcanDB", "bnauser",
 				"bnauser"); PreparedStatement st = con.prepareStatement(query);) {
 			st.setString(1, id);
@@ -94,13 +84,16 @@ public class CategoryDao implements IDao<Category> {
 	}
 
 	@Override
-	public boolean update(Category category) throws Exception {
+	public boolean update(ImportantDate imdate) throws Exception {
 		Class.forName("com.mysql.jdbc.Driver");
-		String query = "update category set name = ? where id = ? ";
+		String query = "update important_date set member_id = ?, date_name = ?, date_description = ?, important_date = ? where id = ? ";
 		try (Connection con = DriverManager.getConnection("jdbc:mysql://185.141.33.102:3306/bananealcanDB", "bnauser",
 				"bnauser"); PreparedStatement st = con.prepareStatement(query);) {
-			st.setString(1, category.getName());
-			st.setString(2, category.getId());
+			st.setString(1, imdate.getMemberId());
+			st.setString(2, imdate.getDateName());
+			st.setString(3, imdate.getDateDescription());
+			st.setDate(4, imdate.getImportantDate());
+			st.setString(5, imdate.getId());
 			st.executeUpdate();
 			return true;
 		} catch (Exception e) {

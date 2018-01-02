@@ -13,31 +13,51 @@ public class Friendship implements Serializable {
 	private static final long serialVersionUID = 4455110929430329209L;
 
 	private String id;
-	private String member_id;
-	private String friend_id;
+	private String memberId;
+	private String friendId;
 
-	public String getId() {
+	/**
+	 * @return the id
+	 */
+	public synchronized String getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public synchronized void setId(String id) {
 		this.id = id;
 	}
 
-	public String getMember_id() {
-		return member_id;
+	/**
+	 * @return the memberId
+	 */
+	public synchronized String getMemberId() {
+		return memberId;
 	}
 
-	public void setMember_id(String member_id) {
-		this.member_id = member_id;
+	/**
+	 * @param memberId
+	 *            the memberId to set
+	 */
+	public synchronized void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 
-	public String getFriend_id() {
-		return friend_id;
+	/**
+	 * @return the friendId
+	 */
+	public synchronized String getFriendId() {
+		return friendId;
 	}
 
-	public void setFriend_id(String friend_id) {
-		this.friend_id = friend_id;
+	/**
+	 * @param friendId
+	 *            the friendId to set
+	 */
+	public synchronized void setFriendId(String friendId) {
+		this.friendId = friendId;
 	}
-
 }

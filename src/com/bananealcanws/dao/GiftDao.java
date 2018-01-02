@@ -28,14 +28,14 @@ public class GiftDao implements IDao<Gift> {
 		// gift.setWishListId("1");
 		// new GiftDao().addGift(gift);
 
-		List<Gift> gifts = new GiftDao().getAll();
-
-		for (Gift gift : gifts) {
-			System.out.println(gift.getId());
-			System.out.println(gift.getName());
-			System.out.println(gift.getDetail());
-			System.out.println(gift.getWishListId());
-		}
+		// List<Gift> gifts = new GiftDao().getAll();
+		//
+		// for (Gift gift : gifts) {
+		// System.out.println(gift.getId());
+		// System.out.println(gift.getName());
+		// System.out.println(gift.getDetail());
+		// System.out.println(gift.getWishListId());
+		// }
 
 		// List<Gift> gifts = new GiftDao().searchGiftsByName("a");
 		//
