@@ -53,6 +53,7 @@ public class MemberService implements IService<Member> {
 	@POST
 	@Path("/Create")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response create(Member member) throws Exception {
 		String result = String.valueOf(memberDao.create(member));
 		return Response.status(201).entity(result).build();
@@ -62,6 +63,7 @@ public class MemberService implements IService<Member> {
 	@POST
 	@Path("/Remove")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response remove(String idJson) throws Exception {
 		JSONObject obj = new JSONObject(idJson);
 		String result = String.valueOf(memberDao.remove(obj.getString("id")));
@@ -72,6 +74,7 @@ public class MemberService implements IService<Member> {
 	@POST
 	@Path("/Update")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(Member member) throws Exception {
 		String result = String.valueOf(memberDao.update(member));
 		return Response.status(200).entity(result).build();

@@ -17,6 +17,7 @@ import org.codehaus.jettison.json.JSONObject;
 import com.bananealcanws.dao.CategoryDao;
 import com.bananealcanws.model.Category;
 
+@Path("/CategoryService")
 public class CategoryService implements IService<Category> {
 
 	private static final CategoryDao catDao = new CategoryDao();
@@ -47,6 +48,7 @@ public class CategoryService implements IService<Category> {
 	@POST
 	@Path("/Create")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response create(Category t) throws Exception {
 		String result = String.valueOf(catDao.create(t));
 		return Response.status(201).entity(result).build();
@@ -56,6 +58,7 @@ public class CategoryService implements IService<Category> {
 	@POST
 	@Path("/Remove")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response remove(String idJson) throws Exception {
 		JSONObject obj = new JSONObject(idJson);
 		String result = String.valueOf(catDao.remove(obj.getString("id")));
@@ -66,6 +69,7 @@ public class CategoryService implements IService<Category> {
 	@POST
 	@Path("/Update")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(Category t) throws Exception {
 		String result = String.valueOf(catDao.update(t));
 		return Response.status(200).entity(result).build();

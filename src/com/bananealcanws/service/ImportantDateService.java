@@ -17,6 +17,7 @@ import org.codehaus.jettison.json.JSONObject;
 import com.bananealcanws.dao.ImportantDateDao;
 import com.bananealcanws.model.ImportantDate;
 
+@Path("/ImportantService")
 public class ImportantDateService implements IService<ImportantDate> {
 
 	private static final ImportantDateDao imdateDao = new ImportantDateDao();
@@ -28,6 +29,15 @@ public class ImportantDateService implements IService<ImportantDate> {
 	public ImportantDate getById(@Context UriInfo params) throws Exception {
 		String id = params.getQueryParameters().getFirst("id");
 		return imdateDao.getById(id);
+	}
+
+	@GET
+	@Path("/GetMemberImportantDates")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getMemberImportantDates(@Context UriInfo params) throws Exception {
+		String memberId = params.getQueryParameters().getFirst("memberId");
+		List<ImportantDate> result = imdateDao.getMemberImportantDates(memberId);
+		return Response.status(200).entity(result).build();
 	}
 
 	@Override
@@ -44,6 +54,7 @@ public class ImportantDateService implements IService<ImportantDate> {
 	@POST
 	@Path("/Create")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response create(ImportantDate t) throws Exception {
 		String result = String.valueOf(imdateDao.create(t));
 		return Response.status(201).entity(result).build();
@@ -53,6 +64,7 @@ public class ImportantDateService implements IService<ImportantDate> {
 	@POST
 	@Path("/Remove")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response remove(String idJson) throws Exception {
 		JSONObject obj = new JSONObject(idJson);
 		String result = String.valueOf(imdateDao.remove(obj.getString("id")));
@@ -63,6 +75,7 @@ public class ImportantDateService implements IService<ImportantDate> {
 	@POST
 	@Path("/Update")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(ImportantDate t) throws Exception {
 		String result = String.valueOf(imdateDao.update(t));
 		return Response.status(200).entity(result).build();

@@ -18,6 +18,7 @@ import com.bananealcanws.dao.FriendshipDao;
 import com.bananealcanws.model.Friendship;
 import com.bananealcanws.model.Member;
 
+@Path("/FriendshipService")
 public class FriendshipService implements IService<Friendship> {
 
 	private static final FriendshipDao fsDao = new FriendshipDao();
@@ -45,6 +46,7 @@ public class FriendshipService implements IService<Friendship> {
 	@POST
 	@Path("/Create")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response create(Friendship t) throws Exception {
 		String res = String.valueOf(fsDao.create(t));
 		return Response.status(200).entity(res).build();
@@ -54,6 +56,7 @@ public class FriendshipService implements IService<Friendship> {
 	@POST
 	@Path("/Remove")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response remove(String idJson) throws Exception {
 		JSONObject obj = new JSONObject(idJson);
 		String result = String.valueOf(fsDao.remove(obj.getString("id")));
@@ -64,6 +67,7 @@ public class FriendshipService implements IService<Friendship> {
 	@POST
 	@Path("/Update")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(Friendship t) throws Exception {
 		String result = String.valueOf(fsDao.update(t));
 		return Response.status(200).entity(result).build();
@@ -72,6 +76,7 @@ public class FriendshipService implements IService<Friendship> {
 	@POST
 	@Path("/GetFriends")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response getFriends(String memberId) throws Exception {
 		List<Member> result = fsDao.getFriends(memberId);
 		return Response.status(200).entity(result).build();

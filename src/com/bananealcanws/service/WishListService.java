@@ -17,6 +17,7 @@ import org.codehaus.jettison.json.JSONObject;
 import com.bananealcanws.dao.WishListDao;
 import com.bananealcanws.model.WishList;
 
+@Path("/WishListService")
 public class WishListService implements IService<WishList> {
 
 	private static final WishListDao wlDao = new WishListDao();
@@ -51,6 +52,7 @@ public class WishListService implements IService<WishList> {
 	@POST
 	@Path("/Create")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response create(WishList t) throws Exception {
 		String result = String.valueOf(wlDao.create(t));
 		return Response.status(201).entity(result).build();
@@ -60,6 +62,7 @@ public class WishListService implements IService<WishList> {
 	@POST
 	@Path("/Remove")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response remove(String idJson) throws Exception {
 		JSONObject obj = new JSONObject(idJson);
 		String result = String.valueOf(wlDao.remove(obj.getString("id")));
@@ -70,6 +73,7 @@ public class WishListService implements IService<WishList> {
 	@POST
 	@Path("/Update")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(WishList t) throws Exception {
 		String result = String.valueOf(wlDao.update(t));
 		return Response.status(200).entity(result).build();

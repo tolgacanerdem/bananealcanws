@@ -17,6 +17,7 @@ import org.codehaus.jettison.json.JSONObject;
 import com.bananealcanws.dao.FriendRequestDao;
 import com.bananealcanws.model.FriendRequest;
 
+@Path("/FriendRequestService")
 public class FriendRequestService implements IService<FriendRequest> {
 
 	private static final FriendRequestDao frDao = new FriendRequestDao();
@@ -24,16 +25,20 @@ public class FriendRequestService implements IService<FriendRequest> {
 	@POST
 	@Path("/GetFriendRequestsToMember")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getFriendRequestsToMember(String memberId) throws Exception {
-		List<FriendRequest> result = frDao.getFriendRequestsToMember(memberId);
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getFriendRequestsToMember(String memberIdJson) throws Exception {
+		JSONObject obj = new JSONObject(memberIdJson);
+		List<FriendRequest> result = frDao.getFriendRequestsToMember(obj.getString("memberId"));
 		return Response.status(200).entity(result).build();
 	}
 
 	@POST
 	@Path("/GetFriendRequestsFromMember")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getFriendRequestsFromMember(String memberId) throws Exception {
-		List<FriendRequest> result = frDao.getFriendRequestsFromMember(memberId);
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getFriendRequestsFromMember(String memberIdJson) throws Exception {
+		JSONObject obj = new JSONObject(memberIdJson);
+		List<FriendRequest> result = frDao.getFriendRequestsFromMember(obj.getString("memberId"));
 		return Response.status(200).entity(result).build();
 	}
 
@@ -60,28 +65,28 @@ public class FriendRequestService implements IService<FriendRequest> {
 	@POST
 	@Path("/Create")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response create(FriendRequest t) throws Exception {
-		String result = String.valueOf(frDao.create(t));
-		return Response.status(201).entity(result).build();
+		return Response.status(201).entity(frDao.create(t)).build();
 	}
 
 	@Override
 	@POST
 	@Path("/Remove")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response remove(String idJson) throws Exception {
 		JSONObject obj = new JSONObject(idJson);
-		String result = String.valueOf(frDao.remove(obj.getString("id")));
-		return Response.status(200).entity(result).build();
+		return Response.status(200).entity(frDao.remove(obj.getString("id"))).build();
 	}
 
 	@Override
 	@POST
 	@Path("/Update")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(FriendRequest t) throws Exception {
-		String result = String.valueOf(frDao.update(t));
-		return Response.status(200).entity(result).build();
+		return Response.status(200).entity(frDao.update(t)).build();
 	}
 
 }

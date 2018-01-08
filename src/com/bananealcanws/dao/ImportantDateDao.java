@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.bananealcanws.model.ImportantDate;
@@ -100,6 +101,36 @@ public class ImportantDateDao implements IDao<ImportantDate> {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public List<ImportantDate> getMemberImportantDates(String memberId) throws Exception {
+		List<ImportantDate> imdates = new ArrayList<>();
+		ImportantDate imdate = null;
+		ResultSet rs = null;
+		Class.forName("com.mysql.jdbc.Driver");
+		String query = "select * from important_date where member_id = ?";
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://185.141.33.102:3306/bananealcanDB", "bnauser",
+				"bnauser"); PreparedStatement st = con.prepareStatement(query);) {
+
+			st.setString(1, memberId);
+			rs = st.executeQuery();
+			while (rs.next()) {
+				imdate = new ImportantDate();
+				imdate.setId(rs.getString("id"));
+				imdate.setMemberId(rs.getString("member_id"));
+				imdate.setDateName(rs.getString("date_name"));
+				imdate.setDateDescription(rs.getString("date_description"));
+				imdate.setImportantDate(rs.getDate("important_date"));
+				imdates.add(imdate);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				rs.close();
+			}
+		}
+		return imdates;
 	}
 
 }

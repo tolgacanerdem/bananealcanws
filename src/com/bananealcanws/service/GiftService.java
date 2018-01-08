@@ -45,6 +45,7 @@ public class GiftService implements IService<Gift> {
 	@POST
 	@Path("/Create")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response create(Gift gift) throws Exception {
 		String result = String.valueOf(giftDao.create(gift));
 		return Response.status(201).entity(result).build();
@@ -63,6 +64,7 @@ public class GiftService implements IService<Gift> {
 	@POST
 	@Path("/Remove")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response remove(String idJson) throws ClassNotFoundException, SQLException, JSONException {
 		JSONObject obj = new JSONObject(idJson);
 		String result = String.valueOf(giftDao.remove(obj.getString("id")));
@@ -73,6 +75,7 @@ public class GiftService implements IService<Gift> {
 	@POST
 	@Path("/Update")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(Gift gift) throws ClassNotFoundException, SQLException, JSONException {
 		String result = String.valueOf(giftDao.update(gift));
 		return Response.status(200).entity(result).build();
